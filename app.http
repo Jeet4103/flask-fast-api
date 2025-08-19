@@ -1,0 +1,23 @@
+POST /student/register HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+  "first_name": "mohit",
+  "last_name": "bharad",
+  "middle_name": "S.",
+  "email": "mohit@gmail.com",
+  "username": "Mohit1",
+  "password": "mohit123"
+}
+
+###
+
+POST /student/login HTTP/1.1
+Host: localhost:8000    
+Content-Type: application/json
+
+{
+  "username": "Jeet4103",
+  "password": "Jeet@123"
+}
