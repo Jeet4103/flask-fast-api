@@ -16,9 +16,10 @@ def test_get_all_students():
     assert response.status_code == 200
 
     data = response.json()
-    assert isinstance(data, list)
+    assert isinstance(data, dict)
+    assert "items" in data
 
-    for student in data:
+    for student in data["items"]:
         assert "id" in student
         assert "username" in student
         assert "email" in student

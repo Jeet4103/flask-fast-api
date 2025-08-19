@@ -2,7 +2,7 @@ from db_manage.db_config import get_connection
 from fastapi import FastAPI , HTTPException , status , Depends ,UploadFile ,File ,APIRouter ,Query
 from fastapi.responses import FileResponse
 from validation import *
-import uvicorn
+import uvicorn  
 from typing import List, Optional
 from auth.auth import create_access_token, decode_token 
 from auth.hash import hash_password, verify_password

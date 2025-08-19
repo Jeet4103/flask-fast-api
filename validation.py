@@ -1,11 +1,10 @@
 from pydantic import BaseModel, validator , EmailStr 
 from email_validator import validate_email , EmailNotValidError
-from db_manage.db_config import get_connection
 from typing import Optional, List 
 from enum import Enum
 from datetime import date,datetime
-from fastapi import UploadFile 
 from decimal import Decimal
+from fastapi_pagination import Page, add_pagination, paginate
     
 class  Permission(BaseModel):
     delete_students: bool
