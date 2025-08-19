@@ -4,7 +4,6 @@ from typing import Optional, List
 from enum import Enum
 from datetime import date,datetime
 from decimal import Decimal
-from fastapi_pagination import Page, add_pagination, paginate
     
 class  Permission(BaseModel):
     delete_students: bool
