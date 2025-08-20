@@ -44,7 +44,6 @@ async def send_mail(email: Email,name: str):
         <html>
         <body>
         
-
          <p>Hi {name}!! <br>
         <br>You successfully registered to the system. </p>
         <br>Thanks for regisrtaration to the student management system. </p>
