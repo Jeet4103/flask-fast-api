@@ -1,5 +1,5 @@
 from db_manage.db_config import get_connection
-from fastapi import FastAPI , HTTPException , status , Depends ,UploadFile ,File ,APIRouter ,Query
+from fastapi import FastAPI , HTTPException , status , Depends ,UploadFile ,File ,APIRouter 
 from fastapi.responses import FileResponse
 from validation import *
 import uvicorn  
@@ -118,6 +118,7 @@ def health_check(token: str=Depends(oauth2_scheme)):
                 status_code=status.HTTp_401_UNAUTHORIZED,
                 detail="Invalid token provided"
             )
+        print(token.credentials)
         student_id = payload.get("sub")
         if not student_id:
            raise HTTPException(status_code=401, detail="Invalid token payload")
@@ -281,7 +282,6 @@ async def login_student(user: StudentLogin):
                 "token_type": "bearer"
             }
         }
-
     except Exception as e:
         raise HTTPException(status_code=500, detail="Login Failed: " + str(e))
 
@@ -298,7 +298,6 @@ def get_logedin_student(token: str = Depends(oauth2_scheme)):
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid token provided"
             )
-
         user_id = payload.get("sub")
         if not user_id:
             raise HTTPException(status_code=401, detail="Invalid token payload")
@@ -1517,15 +1516,9 @@ async def download_all_documents(student_id: int, background_tasks: BackgroundTa
     permission = _get_user_permissions(token_student_id)
     if not permission.student_document:
         raise HTTPException(status_code=403, detail="Not enough permissions")
-    
+
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM users WHERE id = %s AND role = 'student' AND is_active = 1;", (student_id,))
-    student = cursor.fetchone()
-    if not student:
-        raise HTTPException(status_code=404, detail="Student not found")
-
     cursor.execute("SELECT * FROM student_documents WHERE student_id = %s", (student_id,))
     documents = cursor.fetchall()
     cursor.close()
