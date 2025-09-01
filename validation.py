@@ -5,21 +5,22 @@ from enum import Enum
 from datetime import date,datetime
 from decimal import Decimal
     
-class  Permission(BaseModel):
-    delete_students: bool
-    soft_delete: bool
-    update_student: bool
-    advanced_search: bool
-    bulk_register:bool
-    create_parent:bool
-    enrollment:bool
-    create_courses:bool
-    create_grades:bool
-    create_attendance:bool
-    student_document:bool
-    student_fees:bool
-    create_fees:bool
-
+class Permission(BaseModel):
+    user_id: Optional[int] = None
+    delete_students: Optional[bool] = None
+    soft_delete: Optional[bool] = None 
+    update_student: Optional[bool] = None
+    advanced_search: Optional[bool] = None
+    create_parent: Optional[bool] = None
+    bulk_register: Optional[bool] = None
+    create_courses: Optional[bool] = None
+    enrollments: Optional[bool] = None
+    create_grades: Optional[bool] = None
+    create_attendance: Optional[bool] = None
+    student_document: Optional[bool] = None
+    create_fees: Optional[bool] = None
+    student_fees: Optional[bool] = None
+    
 class Profile(BaseModel):
     phone_number: Optional[int] = None
     mothers_name: Optional[str] = None

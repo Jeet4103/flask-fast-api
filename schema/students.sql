@@ -5,5 +5,5 @@ CREATE TABLE students (
     middle_name VARCHAR(50),
     last_name VARCHAR(50),
     full_name VARCHAR(100),
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-);
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;

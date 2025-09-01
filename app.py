@@ -264,8 +264,6 @@ async def bulk_register_student(file:UploadFile = File(...),token:str = Depends(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Bulk Registration Failed: {str(e)}")
 
-
-
 @app.post('/student/login', response_model=LoginResponse, status_code=status.HTTP_200_OK)
 async def login_student(user: StudentLogin):
     try:
@@ -478,7 +476,7 @@ def get_student_by_id(id: int,token: str=Depends(oauth2_scheme)):
         if not student_id:
             raise HTTPException(status_code=401, detail="Invalid token payload")
         permission = _get_user_permissions(student_id)
-        if not permission.update_student:
+        if not permission.advanced_search:
             raise HTTPException(status_code=403, detail="Not enough permissions")
         conn = get_connection() 
         cursor = conn.cursor(dictionary=True)
@@ -1519,9 +1517,15 @@ async def download_all_documents(student_id: int, background_tasks: BackgroundTa
     permission = _get_user_permissions(token_student_id)
     if not permission.student_document:
         raise HTTPException(status_code=403, detail="Not enough permissions")
-
+    
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM users WHERE id = %s AND role = 'student' AND is_active = 1;", (student_id,))
+    student = cursor.fetchone()
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found")
+
     cursor.execute("SELECT * FROM student_documents WHERE student_id = %s", (student_id,))
     documents = cursor.fetchall()
     cursor.close()
